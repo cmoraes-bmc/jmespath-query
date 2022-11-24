@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="jmespath.min.js"></script>
+    <script src="examples.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="demo-app">
+      <div class="query">
+        <input
+          type="text"
+          id="querydemo"
+
+          oninput="update()"
+        />
+        <button onclick="copyQuery()">Copy Query</button>
+      </div>
+
+      <div class="areas">
+        <textarea
+          id="inputdemo"
+          cols="45"
+          rows="25"
+          oninput="update()"
+        ></textarea>
+        <textarea id="outputdemo" cols="45" rows="25"></textarea>
+      </div>
+
+      <div id="select">
+        <select
+          name="examples"
+          id="examples"
+          onchange="updateQuery(this)"
+        ></select>
+      </div>
+    </div>
+
+    <script>
+      const inputDemo = document.getElementById("inputdemo");
+      const outputDemo = document.getElementById("outputdemo");
+      const queryDemo = document.getElementById("querydemo");
+
+      const select = document.getElementById("examples");
+
+      let selectedQuery;
+
+      const demoJson = `{
+    "MyFolder":{
+        "Type":"Folder",
+        "RunAs":"controlm",
+        "Application":"Demo Query",
+
+        "Job1":{
+            "Type":"Job:Command",
+            "Command":"echo Hello World!"
+        }
+    }
+}`;
+
+      function updateQuery(e) {
+        selectedQuery = queries[e.selectedIndex];
+        inputDemo.value = JSON.stringify(selectedQuery.input, "", 4);
+        queryDemo.value = selectedQuery.query;
+        update();
+      }
+
+      function update() {
+        outputDemo.value = JSON.stringify(
+          jmespath.search(JSON.parse(inputDemo.value), queryDemo.value),
+          "",
+          4
+        );
+      }
+
+      window.onload = () => {
+        queries.forEach((e) => {
+          select.innerHTML += `<option>${e.name} -  ${e.description} </option>`;
+        });
+        selectedQuery = queries[0];
+        inputDemo.value = JSON.stringify(selectedQuery.input, "", 4);
+        queryDemo.value = selectedQuery.query;
+        update();
+      };
+
+      function copyQuery() {
+        queryDemo.select();
+        queryDemo.setSelectionRange(0, 99999); // For mobile devices
+
+        navigator.clipboard.writeText(queryDemo.value);
+      }
+    </script>
+  </body>
+</html>

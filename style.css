@@ -1,0 +1,58 @@
+
+body{
+    margin: 0px;
+    padding: 20px;
+
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    
+}
+
+button{
+    background-color: #fff;
+    border: solid 2px #333;
+}
+
+button:hover{
+    background-color: #ccc;
+}
+
+button:active{
+    background-color: #aaa;
+}
+
+#demo-app{
+    display: flex;
+    flex-direction: column;
+    align-items: center;  
+    gap: 1rem;  
+    max-width: 1000px;
+    margin: auto;
+}
+
+.query{
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+.areas{
+    display: flex;
+    justify-content: space-evenly;
+    gap: 5rem;    
+}
+
+.areas > *{
+    font-family: 'Courier New', Courier, monospace;
+}
+
+
+#examples{
+    width: 1000px;
+    text-align: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: larger;
+}
+
+#querydemo{
+    width: 100%;    
+}
